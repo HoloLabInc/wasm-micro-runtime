@@ -12,11 +12,13 @@ set (WAMR_BUILD_TYPE          Release)
 set (WAMR_BUILD_INTERP        1)
 set (WAMR_BUILD_AOT           0)
 set (WAMR_BUILD_LIBC_BUILTIN  1)
-set (WAMR_BUILD_LIBC_WASI     1)
+set (WAMR_BUILD_LIBC_WASI     0)
 
 # Reset default linker flags
 set (CMAKE_SHARED_LIBRARY_LINK_C_FLAGS "")
 set (CMAKE_SHARED_LIBRARY_LINK_CXX_FLAGS "")
+
+set (WAMR_DISABLE_HW_BOUND_CHECK 1)
 
 # Set WAMR_BUILD_TARGET, currently values supported:
 # "X86_64", "AMD_64", "X86_32", "AARCH64[sub]", "ARM[sub]", "THUMB[sub]",
@@ -132,7 +134,7 @@ endif ()
 #set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fstack-protector-strong --param ssp-buffer-size=4")
 #set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wl,-z,noexecstack,-z,relro,-z,now")
 
-add_library (iwasm SHARED ${WAMR_RUNTIME_LIB_SOURCE})
+add_library (iwasm STATIC ${WAMR_RUNTIME_LIB_SOURCE})
 if (CMAKE_BUILD_TYPE STREQUAL Release)
 target_link_libraries (iwasm ${LLVM_AVAILABLE_LIBS} ${UV_A_LIBS} -lm -ldl -s)
 else()

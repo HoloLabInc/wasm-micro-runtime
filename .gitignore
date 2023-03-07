@@ -32,3 +32,10 @@ samples/socket-api/wasm-src/inc/pthread.h
 **/__pycache__
 
 tests/benchmarks/coremark/coremark*
+
+samples/workload/include/**
+!samples/workload/include/.gitkeep
+
+product-mini/platforms/ios/ios-cmake/**
+product-mini/platforms/ios/ios-cmake
+product-mini/platforms/ios/iwasm-proj/**
