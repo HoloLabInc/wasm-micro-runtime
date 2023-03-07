@@ -607,6 +607,10 @@ WASM_API_EXTERN own wasm_instance_t* wasm_instance_new_with_args(
 WASM_API_EXTERN void wasm_instance_exports(const wasm_instance_t*, own wasm_extern_vec_t* out);
 
 
+WASM_API_EXTERN uint8_t wasm_index_of_func_export(wasm_instance_t *inst, const char *name, uint32_t *out_index);
+WASM_API_EXTERN uint8_t wasm_index_of_func_import(wasm_module_t *module, const char *module_name, const char *name, uint32_t *out_index);
+WASM_API_EXTERN uint8_t wasm_count_of_func_import(wasm_module_t *module, uint32_t *out_count);
+
 ///////////////////////////////////////////////////////////////////////////////
 // Convenience
 

@@ -11,7 +11,7 @@ set (CMAKE_TOOLCHAIN_FILE "$ENV{ANDROID_NDK_LATEST_HOME}/build/cmake/android.too
 set (ANDROID_SDK $ENV{ANDROID_HOME})
 set (ANDROID_NDK $ENV{ANDROID_NDK_LATEST_HOME})
 
-set (ANDROID_ABI "x86")
+set (ANDROID_ABI "arm64-v8a")
 set (ANDROID_LD lld)
 if (NOT DEFINED ANDROID_PLATFORM)
   set (ANDROID_PLATFORM 24)
@@ -20,13 +20,15 @@ endif ()
 project (iwasm)
 
 set (WAMR_BUILD_PLATFORM      "android")
-set (WAMR_BUILD_TARGET        "X86_32")
+set (WAMR_BUILD_TARGET        "AARCH64")
 set (WAMR_BUILD_TYPE          Release)
 set (WAMR_BUILD_INTERP        1)
-set (WAMR_BUILD_AOT           1)
+set (WAMR_BUILD_AOT           0)
 set (WAMR_BUILD_JIT           0)
 set (WAMR_BUILD_LIBC_BUILTIN  1)
-set (WAMR_BUILD_LIBC_WASI     1)
+set (WAMR_BUILD_LIBC_WASI     0)
+
+set (WAMR_DISABLE_HW_BOUND_CHECK 1)
 
 # Reset default linker flags
 set (CMAKE_SHARED_LIBRARY_LINK_C_FLAGS "")

@@ -17,6 +17,9 @@ set (CMAKE_C_STANDARD 99)
 
 add_definitions(-DCOMPILING_WASM_RUNTIME_API=1)
 
+set (WAMR_BUILD_AOT 0)
+set (WAMR_BUILD_LIBC_UVWASI 0)
+
 # Set WAMR_BUILD_TARGET, currently values supported:
 # "X86_64", "AMD_64", "X86_32", "AARCH64[sub]", "ARM[sub]", "THUMB[sub]", "MIPS", "XTENSA"
 if (NOT DEFINED WAMR_BUILD_TARGET)

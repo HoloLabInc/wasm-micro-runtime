@@ -5150,3 +5150,54 @@ BASIC_FOUR_LIST(WASM_EXTERN_AS_OTHER_CONST)
 
 BASIC_FOUR_LIST(WASM_OTHER_AS_EXTERN_CONST)
 #undef WASM_OTHER_AS_EXTERN_CONST
+
+uint8_t
+wasm_index_of_func_export(wasm_instance_t *inst, const char *name,
+                          uint32_t *out_index)
+{
+    if (inst->inst_comm_rt) {
+        WASMModuleInstance *instance =
+            (const WASMModuleInstance *)(inst->inst_comm_rt);
+        for (uint32_t i = 0; i < instance->export_func_count; i++) {
+            if (strcmp(instance->export_functions[i].name, name) == 0) {
+                *out_index = i;
+                return 1; // true
+            }
+        }
+    }
+    *out_index = 0;
+    return 0; // false
+}
+
+uint8_t
+wasm_index_of_func_import(wasm_module_t *module, const char *module_name,
+                          const char *name, uint32_t *out_index)
+{
+#if WASM_ENABLE_INTERP != 0
+    const WASMModule *module_interp = MODULE_INTERP(module);
+    for (uint32_t i = 0; i < module_interp->import_count; i++) {
+        WASMImport *import = module_interp->imports + i;
+
+        if (import->kind == IMPORT_KIND_FUNC
+            && strcmp(import->u.names.module_name, module_name) == 0
+            && strcmp(import->u.names.field_name, name) == 0) {
+            *out_index = i;
+            return 1; // true
+        }
+    }
+#endif
+    *out_index = 0;
+    return 0; // false
+}
+
+uint8_t
+wasm_count_of_func_import(wasm_module_t *module, uint32_t *out_count)
+{
+#if WASM_ENABLE_INTERP != 0
+    const WASMModule *module_interp = MODULE_INTERP(module);
+    *out_count = module_interp->import_count;
+    return 1; // true
+#endif
+    *out_count = 0;
+    return 0; // false
+}
