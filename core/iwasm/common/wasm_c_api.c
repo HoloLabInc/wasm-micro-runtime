@@ -5152,14 +5152,15 @@ BASIC_FOUR_LIST(WASM_OTHER_AS_EXTERN_CONST)
 #undef WASM_OTHER_AS_EXTERN_CONST
 
 uint8_t
-wasm_index_of_func_export(wasm_instance_t *inst, const char *name,
-                          uint32_t *out_index)
+wasm_index_of_export(wasm_instance_t *inst, const char *name,
+                     wasm_externkind_t kind, uint32_t *out_index)
 {
     if (inst->inst_comm_rt) {
         WASMModuleInstance *instance =
             (const WASMModuleInstance *)(inst->inst_comm_rt);
-        for (uint32_t i = 0; i < instance->export_func_count; i++) {
-            if (strcmp(instance->export_functions[i].name, name) == 0) {
+        for (uint32 i = 0; i < instance->module->export_count; i++) {
+            if (strcmp(instance->module->exports[i].name, name) == 0
+                && instance->module->exports[i].kind == kind) {
                 *out_index = i;
                 return 1; // true
             }
@@ -5191,7 +5192,7 @@ wasm_index_of_func_import(wasm_module_t *module, const char *module_name,
 }
 
 uint8_t
-wasm_count_of_func_import(wasm_module_t *module, uint32_t *out_count)
+wasm_count_of_import(wasm_module_t *module, uint32_t *out_count)
 {
 #if WASM_ENABLE_INTERP != 0
     const WASMModule *module_interp = MODULE_INTERP(module);
