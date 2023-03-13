@@ -6,6 +6,9 @@ cmake_minimum_required (VERSION 2.9)
 project (iwasm)
 
 set (WAMR_BUILD_PLATFORM "darwin")
+set (WAMR_BUILD_LIBC_WASI 0)
+set (WAMR_BUILD_AOT 0)
+set (WAMR_DISABLE_HW_BOUND_CHECK 1)
 
 # Reset default linker flags
 set (CMAKE_SHARED_LIBRARY_LINK_C_FLAGS "")
