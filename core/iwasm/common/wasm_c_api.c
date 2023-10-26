@@ -5172,11 +5172,11 @@ wasm_index_of_export(wasm_instance_t *inst, const char *name,
 
 uint8_t
 wasm_index_of_func_import(wasm_module_t *module, const char *module_name,
-                          const char *name, uint32_t *out_index)
+                          const char *name, uint32_t search_offset, uint32_t *out_index)
 {
 #if WASM_ENABLE_INTERP != 0
     const WASMModule *module_interp = MODULE_INTERP(module);
-    for (uint32_t i = 0; i < module_interp->import_count; i++) {
+    for (uint32_t i = search_offset; i < module_interp->import_count; i++) {
         WASMImport *import = module_interp->imports + i;
 
         if (import->kind == IMPORT_KIND_FUNC
